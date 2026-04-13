@@ -1,14 +1,17 @@
 package dev.madiyar.vento.entity;
 
 
+import dev.madiyar.vento.enums.TokenType;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.type.PostgreSQLEnumJdbcType;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name= "password_reset_tokens")
-public class PasswordResetToken {
+@Table(name= "user_tokens")
+public class UserToken {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -23,13 +26,28 @@ public class PasswordResetToken {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public PasswordResetToken() {}
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)  // ← говорим Hibernate использовать PostgreSQL enum
+    private TokenType type;
 
-    public PasswordResetToken(UUID id, String token, OffsetDateTime expiryDate, User user) {
-        this.id = id;
+
+    public UserToken() {}
+
+    public UserToken( String token, OffsetDateTime expiryDate,
+                      User user, TokenType type) {
         this.token = token;
         this.expiryDate = expiryDate;
         this.user = user;
+        this.type = type;
+    }
+
+    public TokenType getType() {
+        return type;
+    }
+
+    public void setType(TokenType type) {
+        this.type = type;
     }
 
     public UUID getId() {

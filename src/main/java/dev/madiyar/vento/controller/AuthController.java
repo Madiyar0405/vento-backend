@@ -2,9 +2,10 @@ package dev.madiyar.vento.controller;
 
 
 import dev.madiyar.vento.dto.*;
+import dev.madiyar.vento.enums.TokenType;
 import dev.madiyar.vento.service.AuthService;
 import dev.madiyar.vento.service.EmailService;
-import dev.madiyar.vento.service.PasswordResetService;
+import dev.madiyar.vento.service.UserTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +16,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
-    private final EmailService emailService;
-    private final PasswordResetService passwordResetService;
+    private final UserTokenService passwordResetService;
 
     @Autowired
-    public AuthController(AuthService authService, PasswordResetService passwordResetService,EmailService emailService) {
+    public AuthController(AuthService authService, UserTokenService passwordResetService) {
         this.authService = authService;
-        this.emailService = emailService;
         this.passwordResetService = passwordResetService;
     }
 
@@ -40,12 +39,8 @@ public class AuthController {
     public ResponseEntity<?> forgotPassword(
             @RequestParam String email
     ){
-        System.out.println("Email received: " + email); // посмотри что тут
+        passwordResetService.initForgotPassword(email);
 
-        String token = passwordResetService.createResetToken(email);
-
-        String link  =  "http://localhost:8081/reset-password?token=" + token;
-        emailService.sendEmail(email, "Reset Password", link);
         return ResponseEntity.ok("Reset link sent");
     }
 
@@ -58,4 +53,10 @@ public class AuthController {
 
         return ResponseEntity.ok("Password successfully updated");
     }
+    @PostMapping("/verify")
+    public ResponseEntity<?> verifyEmail(@RequestParam String token){
+        passwordResetService.verifyEmail(token);
+        return ResponseEntity.ok("Email verified");
+    }
+
 }
