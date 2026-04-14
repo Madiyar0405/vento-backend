@@ -9,6 +9,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/// the packaging structure is not well defined,
+///
+/// better to have all internal application logic in one place
+/// since it is related to application configuration it most probably better to move to config or security and
+///
+/// make it package private access level
+/// it is general rule `interface` is `public`, `implementation` is `package level` at most
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;

@@ -5,6 +5,7 @@ import dev.madiyar.vento.entity.Organization;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+// it worth to use same convension accoss application, it is by definitino reveals it a Dto so there is no need ot Dto suffix
 public class UserResponseDto {
 
     private UUID id;

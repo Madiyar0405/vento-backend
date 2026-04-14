@@ -16,6 +16,7 @@ import java.util.Date;
 @Service
 public class JwtService {
 
+    // none conventional name better secret
     @Value("${token.signing.key}")
     private String SECRET;
 
@@ -40,6 +41,7 @@ public class JwtService {
     }
 
     public String extractEmail(String token){
+        // duplicate code with isTokenValid
         return Jwts.parser()
                 .setSigningKey(getSigningKey())
                 .build()
@@ -51,7 +53,10 @@ public class JwtService {
     // Проверяем что токен валидный и не истёк
     public boolean isTokenValid(String token) {
         try {
+            // documentation states that parser guarantee immutable and thread safe worth
+            // to move initialization of parser to constructure
             Jwts.parser()
+                    // deprecate API, better straight to use a new API
                     .setSigningKey(getSigningKey())
                     .build()
                     .parseClaimsJws(token); // если токен плохой — выбросит исключение

@@ -39,8 +39,10 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults()) // добавь это
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        // worth to combine all `permitAll` into single section below to swagger
 
                         .requestMatchers("/auth/**").permitAll()
+                        // this basically call magic variables "OWNER", "MANAGER" better to extract and document rolws
                         .requestMatchers("/admin/**").hasRole("OWNER")
                         .requestMatchers("/manager/**").hasAnyRole("OWNER", "MANAGER")
                         .requestMatchers(
@@ -49,7 +51,6 @@ public class SecurityConfig {
                                 "/swagger-ui.html"
                         ).permitAll()
                         .anyRequest().authenticated()
-
                 )
                 .userDetailsService(userDetailsService)
                 .sessionManagement(s -> s
