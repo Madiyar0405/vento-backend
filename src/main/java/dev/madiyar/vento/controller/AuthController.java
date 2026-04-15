@@ -2,9 +2,8 @@ package dev.madiyar.vento.controller;
 
 
 import dev.madiyar.vento.dto.*;
-import dev.madiyar.vento.enums.TokenType;
+import dev.madiyar.vento.security.dto.JwtAuthResponse;
 import dev.madiyar.vento.service.AuthService;
-import dev.madiyar.vento.service.EmailService;
 import dev.madiyar.vento.service.UserTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,12 +25,12 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<JwtAuthDto> login(@RequestBody UserCredentialsDto request) {
+    public ResponseEntity<JwtAuthResponse> login(@RequestBody UserCredentials request) {
         return ResponseEntity.ok(authService.login(request.getEmail(), request.getPassword()));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<JwtAuthDto> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<JwtAuthResponse> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(request));
     }
 

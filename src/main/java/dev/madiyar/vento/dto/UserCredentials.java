@@ -1,6 +1,6 @@
 package dev.madiyar.vento.dto;
 
-public class UserCredentialsDto {
+public class UserCredentials {
     private String email;
     private String password;
 

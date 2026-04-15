@@ -1,11 +1,10 @@
 package dev.madiyar.vento.entity;
 
 
-import dev.madiyar.vento.enums.UserRole;
-import dev.madiyar.vento.enums.UserStatus;
+import dev.madiyar.vento.security.enums.UserRole;
+import dev.madiyar.vento.security.enums.UserStatus;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcType;
-import org.hibernate.annotations.Type;
 import org.hibernate.dialect.type.PostgreSQLEnumJdbcType;
 
 import java.time.OffsetDateTime;

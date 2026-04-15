@@ -1,8 +1,8 @@
 package dev.madiyar.vento.config;
 
+import dev.madiyar.vento.security.enums.UserRole;
 import dev.madiyar.vento.security.CustomUserDetailsService;
 import dev.madiyar.vento.security.JwtFilter;
-import io.jsonwebtoken.Jwt;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,8 +41,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("OWNER")
-                        .requestMatchers("/manager/**").hasAnyRole("OWNER", "MANAGER")
+                        .requestMatchers("/admin/**").hasRole(UserRole.OWNER.name())
+                        .requestMatchers("/manager/**").hasAnyRole(UserRole.OWNER.name(), UserRole.MANAGER.name())
                         .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",

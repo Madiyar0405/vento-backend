@@ -1,7 +1,7 @@
 package dev.madiyar.vento.controller;
 
 
-import dev.madiyar.vento.dto.UserResponseDto;
+import dev.madiyar.vento.dto.UserResponse;
 import dev.madiyar.vento.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,20 +22,24 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserResponseDto> getAll() {
+    public List<UserResponse> getAll() {
         return userService.getAll();
     }
 
     @GetMapping("/me")
-    public UserResponseDto getMe(Authentication authentication){
+    public UserResponse getMe(Authentication authentication){
         String email = authentication.getName();
         return userService.getByEmail(email);
     }
 
     @GetMapping("/{id}")
-    public UserResponseDto getUserById(@PathVariable("id") UUID id){
+    public UserResponse getUserById(@PathVariable("id") UUID id){
         return userService.getUserByID(id);
     }
+
+//    @PostMapping("/invite")
+//    public
+
 
 }
 

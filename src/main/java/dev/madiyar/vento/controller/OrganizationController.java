@@ -1,9 +1,12 @@
 package dev.madiyar.vento.controller;
 
 
-import dev.madiyar.vento.entity.Organization;
+import dev.madiyar.vento.dto.OrganizationCreateRequest;
+import dev.madiyar.vento.dto.OrganizationResponse;
 import dev.madiyar.vento.service.OrganizationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,12 +24,13 @@ public class OrganizationController {
 
 
     @GetMapping
-    public List<Organization> getAll(){
+    public List<OrganizationResponse> getAll(){
         return organizationService.getAll();
     }
 
-    @PostMapping("/create")
-    public void create(@RequestBody Organization organization){
-        organizationService.create(organization);
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public OrganizationResponse create(@RequestBody @Valid OrganizationCreateRequest request){
+        return organizationService.create(request);
     }
 }

@@ -1,9 +1,9 @@
 package dev.madiyar.vento.dto;
 
-public class RefreshTokenDto  {
+public class RefreshToken {
     private String refreshToken;
 
-    public RefreshTokenDto(String refreshToken) {
+    public RefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
 

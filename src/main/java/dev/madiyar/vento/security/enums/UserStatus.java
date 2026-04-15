@@ -1,4 +1,4 @@
-package dev.madiyar.vento.enums;
+package dev.madiyar.vento.security.enums;
 
 public enum UserStatus {
     ACTIVE,

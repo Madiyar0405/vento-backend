@@ -1,11 +1,9 @@
 package dev.madiyar.vento.dto;
 
-import dev.madiyar.vento.entity.Organization;
-
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-public class UserResponseDto {
+public class UserResponse {
 
     private UUID id;
     private String email;
@@ -18,9 +16,9 @@ public class UserResponseDto {
     private boolean isEmailVerified;
     private String organizationName;
 
-    public UserResponseDto(UUID id, String email, String name, String surname,
-                           String role, String status, OffsetDateTime createdAt,
-                           boolean isEmailVerified, String organizationName, OffsetDateTime updatedAt) {
+    public UserResponse(UUID id, String email, String name, String surname,
+                        String role, String status, OffsetDateTime createdAt,
+                        boolean isEmailVerified, String organizationName, OffsetDateTime updatedAt) {
         this.id = id;
         this.email = email;
         this.name = name;

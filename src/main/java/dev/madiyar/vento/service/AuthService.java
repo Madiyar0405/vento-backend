@@ -1,14 +1,11 @@
 package dev.madiyar.vento.service;
 
 
-import dev.madiyar.vento.dto.JwtAuthDto;
+import dev.madiyar.vento.security.dto.JwtAuthResponse;
 import dev.madiyar.vento.dto.RegisterRequest;
-import dev.madiyar.vento.dto.RegisterResponse;
 import dev.madiyar.vento.entity.User;
-import dev.madiyar.vento.entity.UserToken;
 import dev.madiyar.vento.enums.TokenType;
 import dev.madiyar.vento.repository.UserRepository;
-import dev.madiyar.vento.repository.UserTokenRepository;
 import dev.madiyar.vento.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,7 +31,7 @@ public class AuthService {
         this.userTokenService = userTokenService;
     }
 
-    public JwtAuthDto register(RegisterRequest request){
+    public JwtAuthResponse register(RegisterRequest request){
 
         if(userRepository.findByEmail(request.getEmail()).isPresent()){
             throw new RuntimeException("Email уже занят");
@@ -49,13 +46,13 @@ public class AuthService {
 
         String token = jwtService.generateToken(request.getEmail());
         String verifyToken = userTokenService.createToken(request.getEmail(), TokenType.EMAIL_VERIFICATION);
-        String link  =  "http://localhost:8081/verify?token=" + token;
-        emailService.sendEmail(request.getEmail(), "Verify token", verifyToken);
+        String link  =  "http://localhost:8081/verify?token=" + verifyToken;
+        emailService.sendEmail(request.getEmail(), "Verify token", link);
 
-        return new JwtAuthDto(token);
+        return new JwtAuthResponse(token);
     }
 
-    public JwtAuthDto login(String email, String password){
+    public JwtAuthResponse login(String email, String password){
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
@@ -65,6 +62,6 @@ public class AuthService {
 
         String token = jwtService.generateToken(email);
 
-        return new JwtAuthDto(token);
+        return new JwtAuthResponse(token);
     }
 }
