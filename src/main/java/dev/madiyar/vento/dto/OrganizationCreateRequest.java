@@ -1,7 +1,6 @@
 package dev.madiyar.vento.dto;
 
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 
 public class OrganizationCreateRequest {

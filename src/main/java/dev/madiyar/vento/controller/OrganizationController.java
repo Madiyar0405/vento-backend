@@ -5,12 +5,16 @@ import dev.madiyar.vento.dto.OrganizationCreateRequest;
 import dev.madiyar.vento.dto.OrganizationResponse;
 import dev.madiyar.vento.service.OrganizationService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@Validated
 @RestController
 @RequestMapping("/api/v1/organizations")
 public class OrganizationController {
@@ -23,14 +27,10 @@ public class OrganizationController {
     }
 
 
-    @GetMapping
-    public List<OrganizationResponse> getAll(){
-        return organizationService.getAll();
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrganizationResponse create(@RequestBody @Valid OrganizationCreateRequest request){
+    public OrganizationResponse create(@RequestBody @Valid @NotNull OrganizationCreateRequest request){
         return organizationService.create(request);
     }
 }
